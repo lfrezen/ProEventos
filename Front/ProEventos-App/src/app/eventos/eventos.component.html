@@ -1,7 +1,50 @@
-<h3>Eventos do Componente</h3>
+<h2>Eventos</h2>
+<hr>
 
-<div *ngFor="let evento of eventos">
-  <p>Tema: {{evento.tema}}</p>
-  <p>Local: {{evento.local}}</p>
-  <hr>
+<div class="row">
+  <div class="col-12">
+    <input type="text" class="form-control mr-2" placeholder="Buscar por eventos" [(ngModel)]="filtroLista">
+  </div>
 </div>
+<br>
+<table class="table table-striped">
+  <thead class="table-dark">
+    <tr>
+      <th><button class="btn btn-outline-light btn-sm" (click)="alternarImagem()">
+          <i class="{{exibirImagem ? 'fa fa-eye-slash' : 'fa fa-eye'}}"></i>
+        </button>
+      </th>
+      <th>#</th>
+      <th>Tema</th>
+      <th>Local</th>
+      <th>Data</th>
+      <th>Qtd Pessoas</th>
+      <th>Lote</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody *ngIf="eventos && eventos.length">
+    <tr *ngFor="let evento of eventosFiltrados">
+      <td><img [collapse]="!exibirImagem" [isAnimated]="true" src="/assets/{{evento.imagemUrl}}"
+          [style.width.px]="widthImg" [style.margin.px]="marginImg" alt="">
+      </td>
+      <td>{{evento.id}}</td>
+      <td>{{evento.tema}}</td>
+      <td>{{evento.local}}</td>
+      <td>{{evento.dataEvento}}</td>
+      <td>{{evento.quantidadePessoas}}</td>
+      <td>{{evento.lote}}</td>
+      <td>
+        <button class="btn btn-primary btn-sm mr-2"><i class="far fa-edit"></i></button>&nbsp;
+        <button class="btn btn-danger btn-sm mr-2"><i class="far fa-trash-alt"></i></button>
+      </td>
+    </tr>
+  </tbody>
+  <tfoot *ngIf="!eventos.length">
+    <tr>
+      <td colspan="8" class="text-center">
+        <h4>Nenhum Evento Encontrado!</h4>
+      </td>
+    </tr>
+  </tfoot>
+</table>
