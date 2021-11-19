@@ -52,7 +52,7 @@ namespace ProEventos.API.Controllers
             }
         }
 
-        [HttpGet("tema/{tema:string}")]
+        [HttpGet("tema/{tema}")]
         public async Task<IActionResult> GetByTema(string tema)
         {
             try
