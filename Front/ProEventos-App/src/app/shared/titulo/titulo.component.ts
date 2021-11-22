@@ -6,8 +6,11 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./titulo.component.scss']
 })
 export class TituloComponent implements OnInit {
-
   @Input() titulo?: string;
+  @Input() subtitulo?: string;
+  @Input() iconClass = 'fa fa-user';
+  @Input() botaoListar = false;
+
 
   constructor() { }
 

@@ -1,54 +1,67 @@
-<app-titulo [titulo]="'Eventos'"></app-titulo>
+<app-titulo [titulo]="'Eventos'" [iconClass]="'fa fa-calendar-alt'" [subtitulo]="'Subtitulo'" [botaoListar]="true">
+</app-titulo>
 
-<div class="row">
-  <div class="col-12">
-    <input type="text" class="form-control mr-2" placeholder="Buscar por eventos" [(ngModel)]="filtroLista">
+<div class="card rounded shadow-sm p-3">
+  <div class="d-flex">
+    <div class="flex-fill pr-3">
+      <div class="input-group mb-2">
+        <div class="inpput-group-prepend">
+          <div class="input-group-text">Filtro</div>
+        </div>
+        <input type="text" class="form-control me-2" placeholder="Buscar por tema ou local" [(ngModel)]="filtroLista">
+      </div>
+    </div>
+    <div>
+      <a class="d-flex btn btn-outline-primary" href="#">
+        <i class="fa fa-plus-circle my-1"></i>
+        <b class="ms-1 d-none d-sm-block">Novo</b></a>
+    </div>
   </div>
+  <br>
+  <table class="table table-striped">
+    <thead class="table-light">
+      <tr>
+        <th class="d-none d-md-table-cell">
+          <button class="btn btn-outline-primary btn-sm" (click)="alternarImagem()">
+            <i class="{{exibirImagem ? 'fa fa-eye-slash' : 'fa fa-eye'}}"></i>
+            {{!exibirImagem ? 'exibir' : 'ocultar'}}
+          </button>
+        </th>
+        <th>#</th>
+        <th>Tema</th>
+        <th class="d-none d-md-table-cell">Local</th>
+        <th>Data</th>
+        <th class="d-none d-md-table-cell">Qtd Pessoas</th>
+        <th class="d-none d-md-table-cell">Lote</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody *ngIf="eventos && eventos.length">
+      <tr *ngFor="let evento of eventosFiltrados">
+        <td class="d-none d-md-table-cell"><img [collapse]="!exibirImagem" [isAnimated]="true"
+            src="/assets/{{evento.imagemUrl}}" [style.width.px]="widthImg" [style.margin.px]="marginImg" alt="">
+        </td>
+        <td>{{evento.id}}</td>
+        <td>{{evento.tema}}</td>
+        <td class="d-none d-md-table-cell">{{evento.local}}</td>
+        <td>{{evento.dataEvento | DateTimeFormat}}</td>
+        <td class="d-none d-md-table-cell">{{evento.quantidadePessoas}}</td>
+        <td class="d-none d-md-table-cell">{{evento.lotes[0].nome}}</td>
+        <td>
+          <button class="btn btn-danger  mr-2" tooltip="Excluir" (click)="openModal(template)"><i
+              class="far fa-trash-alt"></i></button>
+        </td>
+      </tr>
+    </tbody>
+    <tfoot *ngIf="!eventos.length">
+      <tr>
+        <td colspan="8" class="text-center">
+          <h4>Nenhum Evento Encontrado!</h4>
+        </td>
+      </tr>
+    </tfoot>
+  </table>
 </div>
-<br>
-<table class="table table-striped">
-  <thead class="table-dark">
-    <tr>
-      <th><button class="btn btn-outline-light btn-sm" (click)="alternarImagem()">
-          <i class="{{exibirImagem ? 'fa fa-eye-slash' : 'fa fa-eye'}}"></i>
-          {{!exibirImagem ? 'exibir' : 'ocultar'}}
-        </button>
-      </th>
-      <th>#</th>
-      <th>Tema</th>
-      <th>Local</th>
-      <th>Data</th>
-      <th>Qtd Pessoas</th>
-      <th>Lote</th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody *ngIf="eventos && eventos.length">
-    <tr *ngFor="let evento of eventosFiltrados">
-      <td><img [collapse]="!exibirImagem" [isAnimated]="true" src="/assets/{{evento.imagemUrl}}"
-          [style.width.px]="widthImg" [style.margin.px]="marginImg" alt="">
-      </td>
-      <td>{{evento.id}}</td>
-      <td>{{evento.tema}}</td>
-      <td>{{evento.local}}</td>
-      <td>{{evento.dataEvento | DateTimeFormat}}</td>
-      <td>{{evento.quantidadePessoas}}</td>
-      <td>{{evento.lotes[0].nome}}</td>
-      <td>
-        <button class="btn btn-primary btn-sm mr-2" tooltip="Editar"><i class="far fa-edit"></i></button>&nbsp;
-        <button class="btn btn-danger btn-sm mr-2" tooltip="Excluir" (click)="openModal(template)"><i
-            class="far fa-trash-alt"></i></button>
-      </td>
-    </tr>
-  </tbody>
-  <tfoot *ngIf="!eventos.length">
-    <tr>
-      <td colspan="8" class="text-center">
-        <h4>Nenhum Evento Encontrado!</h4>
-      </td>
-    </tr>
-  </tfoot>
-</table>
 
 <ng-template #template>
   <div class="modal-body text-center">
