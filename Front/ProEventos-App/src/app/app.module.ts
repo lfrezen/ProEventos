@@ -1,7 +1,7 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from "@angular/common/http";
 
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
@@ -54,6 +54,7 @@ import { DateTimeFormatPipe } from './helpers/DateTimeFormat.pipe';
     BsDropdownModule.forRoot(),
     CollapseModule.forRoot(),
     FormsModule,
+    ReactiveFormsModule,
     HttpClientModule,
     ModalModule.forRoot(),
     NgxSpinnerModule,
