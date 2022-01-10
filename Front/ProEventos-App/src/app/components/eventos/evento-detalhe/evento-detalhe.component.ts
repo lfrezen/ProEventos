@@ -28,7 +28,7 @@ export class EventoDetalheComponent implements OnInit {
   get bsConfig(): any {
     return {
       adaptivePosition: true,
-      dateInputFormat: 'DD/MM/YYYY hh:mm a',
+      dateInputFormat: 'DD/MM/YYYY hh:mm',
       containerClass: 'theme-default',
       showWeekNumbers: false,
       minDate: this.minimumDate
@@ -102,29 +102,20 @@ export class EventoDetalheComponent implements OnInit {
     this.spinner.show();
     if (this.form.valid) {
 
-      if (this.estadoSalvar === 'post') {
-        this.evento = { ...this.form.value }
-        this.eventoService.postEvento(this.evento).subscribe(
-          () => this.toastr.success('Evento atualizado com sucesso!', 'Atualizado'),
-          (error: any) => {
-            console.error(error);
-            this.spinner.hide();
-            this.toastr.error('Ocorreu um erro ao atualizar o evento', 'Erro');
-          },
-          () => this.spinner.hide()
-        );
-      } else {
-        this.evento = { id: this.evento.id, ...this.form.value }
-        this.eventoService.putEvento(this.evento.id, this.evento).subscribe(
-          () => this.toastr.success('Evento atualizado com sucesso!', 'Atualizado'),
-          (error: any) => {
-            console.error(error);
-            this.spinner.hide();
-            this.toastr.error('Ocorreu um erro ao atualizar o evento', 'Erro');
-          },
-          () => this.spinner.hide()
-        );
-      }
+      this.evento = (this.estadoSalvar === 'post')
+        ? { ...this.form.value }
+        : { id: this.evento.id, ...this.form.value };
+
+      this.eventoService[this.estadoSalvar](this.evento).subscribe(
+        () => this.toastr.success('Evento atualizado com sucesso!', 'Atualizado'),
+        (error: any) => {
+          console.error(error);
+          this.spinner.hide();
+          this.toastr.error('Ocorreu um erro ao atualizar o evento', 'Erro');
+        },
+        () => this.spinner.hide()
+      );
+
     }
   }
 }
